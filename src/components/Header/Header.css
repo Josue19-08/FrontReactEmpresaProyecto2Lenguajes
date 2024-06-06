@@ -1,0 +1,31 @@
+.header {
+  background-color: #036796;
+  padding: 10px;
+  color: white;
+  text-align: center;
+}
+
+.header h1 {
+  font-size: 3em; /* Tamaño del texto */
+  font-family: 'Roboto', cursive; /* Fuente nueva */
+}
+
+.header nav a {
+  margin: 0 10px;
+  color: #080808;
+  text-decoration: none;
+}
+
+.header nav a:hover {
+  text-decoration: underline;
+  color: #fd0046;
+}
+
+
+
+/*
+#03affc;
+#ffd320;
+#fd0046;
+
+*/

@@ -1,0 +1,80 @@
+.empresa-perfil {
+  padding: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.empresa-perfil h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.empresa-perfil img.empresa-imagen-grande {
+  display: block;
+  margin: 0 auto 20px;
+  max-width: 200px;
+  max-height: 200px;
+  border-radius: 50%;
+  margin-top: 20px;
+}
+
+.empresa-perfil form {
+  display: flex;
+  flex-direction: column;
+}
+
+.empresa-perfil label {
+  margin-bottom: 5px;
+}
+
+.empresa-perfil input,
+.empresa-perfil select {
+  margin-bottom: 15px;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  width: 100%;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  border-radius: 20px;
+}
+
+.empresa-perfil select {
+  background-color: white;
+  background-image: url('data:image/svg+xml;utf8,<svg fill="%23ccc" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+  background-position: right 10px center;
+  background-repeat: no-repeat;
+  background-size: 24px 24px;
+  padding-right: 40px; /* Espacio para el icono de la flecha */
+  border-radius: 20px;
+}
+
+.empresa-perfil input:focus,
+.empresa-perfil select:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.empresa-perfil button {
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #FFD320;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+  border-radius: 20px;
+}
+
+.empresa-perfil button:hover {
+  background-color: #c4a011;
+}
+
+.error {
+  color: red;
+  margin-bottom: 15px;
+}
