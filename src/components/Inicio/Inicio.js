@@ -30,7 +30,8 @@ function ChildModal({ open, handleClose, cuponId, fetchPromociones, selectedCupo
     descripcion: '',
     fecha_inicio: '',
     fecha_vencimiento: '',
-    descuento: 0
+    descuento: 0,
+    estado: 'Activo'
   });
 
   useEffect(() => {
@@ -385,7 +386,57 @@ function Inicio() {
       console.error('Error eliminando la promoción:', error);
       alert('Hubo un error al eliminar la promoción');
     }
+
   };
+
+  const actualizarEstadoPromocion = async (promocionId, nuevoEstado) => {
+    // Encuentra la promoción que necesitas actualizar
+    const promocion = promociones.find(promo => promo.id === promocionId);
+
+    // Si no se encuentra la promoción, muestra un error
+    if (!promocion) {
+        alert('Promoción no encontrada');
+        return;
+    }
+
+    // Actualiza el estado de la promoción
+    const dataToSend = {
+        METHOD: 'PUT',
+        id: promocion.id,
+        cupon_id: promocion.cupon_id,
+        descripcion: promocion.descripcion,
+        fecha_inicio: promocion.fecha_inicio,
+        fecha_vencimiento: promocion.fecha_vencimiento,
+        descuento: promocion.descuento,
+        estado: nuevoEstado
+    };
+
+    console.log('Datos que se envían:', JSON.stringify(dataToSend));
+
+    try {
+        const response = await fetch(API_PROMOCION_URL, {
+            method: 'POST', // Utilizando POST para enviar una solicitud PUT
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dataToSend)
+        });
+
+        console.log('Estado de la respuesta:', response.status);
+        const result = await response.json();
+        console.log('Respuesta del servidor:', result);
+        alert(result.message);
+        fetchPromociones(selectedCupon.id);
+    } catch (error) {
+        console.error('Error actualizando el estado de la promoción:', error);
+        alert('Hubo un error al actualizar el estado de la promoción');
+    }
+};
+
+
+
+
+  
 
   const openModal = (cupon) => {
     setSelectedCupon(cupon);
@@ -558,20 +609,28 @@ function Inicio() {
         Promociones para {selectedCupon && selectedCupon.nombre}
       </Typography>
       <Button onClick={openChildModal} sx={{ width: '100%', marginBottom: '20px' }} className="modal-button">Crear Promoción</Button>
-      {promociones.map(promocion => (
-        <li key={promocion.id} style={{ marginBottom: '20px' }}>
+      {promociones.map((promocion, index) => (
+        <li key={promocion.id || index} style={{ marginBottom: '20px' }}>
           <Box sx={{ border: '1px solid #ccc', padding: '10px', borderRadius: '5px', backgroundColor: '#fff' }}>
             <Typography variant="body1"><strong>Descripción:</strong> {promocion.descripcion}</Typography>
             <Typography variant="body2"><strong>Fecha Inicio:</strong> {promocion.fecha_inicio}</Typography>
             <Typography variant="body2"><strong>Fecha Vencimiento:</strong> {promocion.fecha_vencimiento}</Typography>
             <Typography variant="body2"><strong>Descuento:</strong> {promocion.descuento}%</Typography>
+            <Typography variant="body2"><strong>Estado:</strong> {promocion.estado}</Typography>
             <Button onClick={() => eliminarPromocion(promocion.id)} sx={{ width: '100%', marginTop: '10px' }} className="modal-button">Eliminar Promoción</Button>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', marginTop: '10px' }}>
+              <Button onClick={() => actualizarEstadoPromocion(promocion.id, 'Activo')} sx={{ flex: '0 1 auto', fontSize: '10px', padding: '2px 5px', minWidth: 'auto', minHeight: 'auto' }} className="modal-button">Habilitar</Button>
+              <Button onClick={() => actualizarEstadoPromocion(promocion.id, 'Inactivo')} sx={{ flex: '0 1 auto', fontSize: '10px', padding: '2px 5px', minWidth: 'auto', minHeight: 'auto' }} className="modal-button">Desactivar</Button>
+            </Box>
           </Box>
         </li>
       ))}
     </ul>
   </Box>
 </Modal>
+
+
+
 
 
 
